@@ -1,0 +1,79 @@
+Turbo Assembler	 Version 3.1	    04/03/18 20:46:55	    Page 1
+kb.asm
+
+
+
+      1	0000				 .model	 tiny
+      2	0000				 .code
+      3					 org 100h
+      4	0100			     start:
+      5	0100  EB 35			     jmp work
+      6	0102  06 00 00 00 00 00	00+	     buffer db 6, 0,0,0,0,0,0, 0, 24h
+      7	      00 24
+      8	010B  49 6E 70 75 74 20	75+	     InputRequest db "Input up to 5 characters:	", 24h
+      9	      70 20 74 6F 20 35	20+
+     10	      63 68 61 72 61 63	74+
+     11	      65 72 73 3A 20 24
+     12	0126  59 6F 75 27 76 65	20+	     OutputReadyString db "You've gave me: ", 24h
+     13	      67 61 76 65 20 6D	65+
+     14	      3A 20 24
+     15	0137			     work:
+     16	0137  B4 09			     mov ah, 09h
+     17	0139  BA 010Br			     lea dx, InputRequest
+     18	013C  CD 21			     int 21h
+     19
+     20	013E  B4 0A			     mov ah, 0Ah
+     21	0140  BA 0102r			     lea dx, buffer
+     22	0143  CD 21			     int 21h
+     23
+     24	0145  B4 02			     mov ah, 02h
+     25	0147  B2 0A			     mov dl, 10
+     26	0149  CD 21			     int 21h
+     27
+     28	014B  B4 09			     mov ah, 09h
+     29	014D  BA 0126r			     lea dx, OutputReadyString
+     30	0150  CD 21			     int 21h
+     31
+     32	0152  B4 09			     mov ah, 09h
+     33	0154  BA 0104r			     lea dx, buffer + 2
+     34	0157  CD 21			     int 21h
+     35	0159			     fin:
+     36	0159  C3			     ret
+     37					     end start
+Turbo Assembler	 Version 3.1	    04/03/18 20:46:55	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "04/03/18"
+??FILENAME			  Text	 "kb	  "
+??TIME				  Text	 "20:46:55"
+??VERSION			  Number 030A
+@32BIT				  Text	 0
+@CODE				  Text	 DGROUP
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 KB
+@INTERFACE			  Text	 00H
+@MODEL				  Text	 1
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+BUFFER				  Byte	 DGROUP:0102
+FIN				  Near	 DGROUP:0159
+INPUTREQUEST			  Byte	 DGROUP:010B
+OUTPUTREADYSTRING		  Byte	 DGROUP:0126
+START				  Near	 DGROUP:0100
+WORK				  Near	 DGROUP:0137
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  16  0000 Word	  Public  DATA
+  _TEXT				  16  015A Word	  Public  CODE
+
